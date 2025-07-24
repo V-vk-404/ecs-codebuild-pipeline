@@ -19,7 +19,7 @@ phases:
       - echo "Pushing to Amazon ECR..."
       - docker push 211125585867.dkr.ecr.us-east-2.amazonaws.com/ecs-codebuild-pipeline:latest
       - echo "Writing image definition file..."
-      - printf '[{"name":"ecs-codebuild-pipeline-cluster","imageUri":"211125585867.dkr.ecr.us-east-2.amazonaws.com/ecs-codebuild-pipeline"}]' > imagedefinitions.json
+      - printf '[{"name":"ecs-codebuild-pipeline","imageUri":"211125585867.dkr.ecr.us-east-2.amazonaws.com/ecs-codebuild-pipeline"}]' > imagedefinitions.json
 
 artifacts:
   files:
