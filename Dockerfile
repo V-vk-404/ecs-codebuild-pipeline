@@ -1,9 +1,5 @@
-FROM public.ecr.aws/nginx/nginx:latest
+FROM docker.io/library/nginx:1.21.1
 
-LABEL maintainer="Lasantha" 
-
-COPY index.html /usr/share/nginx/html
+COPY ./index.html /usr/share/nginx/html/index.html
 
 EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
