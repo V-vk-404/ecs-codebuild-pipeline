@@ -3,25 +3,23 @@ version: 0.2
 phases:
   pre_build:
     commands:
-       - echo Logging / auth in to Amazon ECR
-       - aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 211125585867.dkr.ecr.us-east-2.amazonaws.com
+      - echo "Logging in to Amazon ECR..."
+      - aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 211125585867.dkr.ecr.us-east-2.amazonaws.com
 
   build:
     commands:
-      - echo Build started
-      - echo Building the docker image
+      - echo "Build started"
+      - echo "Building the Docker image..."
       - docker build -t ecs-codebuild-pipeline .
       - docker tag ecs-codebuild-pipeline:latest 211125585867.dkr.ecr.us-east-2.amazonaws.com/ecs-codebuild-pipeline:latest
 
-
   post_build:
     commands:
-     - echo build completed
-     - echo pushing in to docker ECR...
-     - docker push 211125585867.dkr.ecr.us-east-2.amazonaws.com/ecs-codebuild-pipeline:latest
-     - echo Writing image definition file..
-     - printf '[{"name":"%s","imageUri":"%s"}]' "ecs-codebuild-pipeline-cluster" "211125585867.dkr.ecr.us-east-2.amazonaws.com/ecs-codebuild-pipeline" > imagedefinitions.json
-
+      - echo "Build completed"
+      - echo "Pushing to Amazon ECR..."
+      - docker push 211125585867.dkr.ecr.us-east-2.amazonaws.com/ecs-codebuild-pipeline:latest
+      - echo "Writing image definition file..."
+      - printf '[{"name":"ecs-codebuild-pipeline-cluster","imageUri":"211125585867.dkr.ecr.us-east-2.amazonaws.com/ecs-codebuild-pipeline"}]' > imagedefinitions.json
 
 artifacts:
   files:
